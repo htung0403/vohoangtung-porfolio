@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "./Portfolio.css";
 import { Icons } from "./icons.jsx";
 import {
@@ -39,13 +39,16 @@ const SKILLS = {
       { name: "React.js / Next.js", pct: 88 },
       { name: "Node.js / Express.js", pct: 82 },
       { name: "Redux Toolkit", pct: 78 },
+      { name: "Tailwind CSS", pct: 85 },
     ],
   },
   Databases: {
     icon: "database",
     bars: [
-      { name: "PostgreSQL (Supabase)", pct: 78 },
+      { name: "PostgreSQL / Supabase", pct: 78 },
+      { name: "MySQL", pct: 72 },
       { name: "MongoDB", pct: 72 },
+      { name: "Firebase", pct: 70 },
     ],
   },
   "DevOps & Tools": {
@@ -53,43 +56,59 @@ const SKILLS = {
     bars: [
       { name: "Git / GitHub", pct: 88 },
       { name: "Vercel / Railway", pct: 80 },
+      { name: "Postman", pct: 82 },
       { name: "REST APIs", pct: 85 },
+    ],
+  },
+  "AI-Assisted Development": {
+    icon: "code",
+    bars: [
+      { name: "Codex", pct: 85 },
+      { name: "GitHub Copilot", pct: 82 },
+      { name: "Claude", pct: 80 },
     ],
   },
 };
 
 const EXTRA_TAGS = [
-  "cPanel",
   "JWT",
-  "CI/CD",
   "Responsive Design",
+  "Role-Based Authorization",
   "Scrum",
   "Agile",
+  "Deployment",
+  "Clean Code",
 ];
 
 const PROJECTS = [
   {
     num: "01",
-    title: "Nam Phuoc 1 Primary School Website",
+    title: "Năm Sự Logistics & Transportation Management Platform",
     role: "Full Stack Developer",
-    desc: "A fullstack web application for a primary school to manage blog posts and announcements, featuring a CMS for staff and teachers, running in production.",
+    desc: "A full-stack logistics and business operations platform built for a transportation company, supporting order processing, warehouse operations, inventory management, HR, payroll, accounting, delivery workflows, and vehicle management.",
     tech: [
       "React",
+      "TypeScript",
+      "Vite",
+      "React Router",
+      "TanStack Query",
       "Tailwind CSS",
       "Node.js",
       "Express",
-      "Supabase",
-      "REST API",
-      "cPanel",
+      "Supabase PostgreSQL",
+      "JWT",
+      "Cloudinary",
+      "Zalo API",
     ],
     highlights: [
-      "Production deployment for a real school",
-      "Blog and news posting",
-      "Admin dashboard for content management",
-      "Responsive UI for mobile and desktop",
+      "Built 89 route-based UI screens, 64 unique page components, and 20+ reusable React components.",
+      "Implemented JWT authentication, role-based authorization, system configuration, and secure file uploads with Cloudinary.",
+      "Developed REST API endpoints for order management, purchasing, inventory, warehouse, delivery, HR, attendance, payroll, accounting, and debt tracking.",
+      "Integrated Zalo notifications to support operational workflows and business communications.",
+      "Deployed and maintained the platform for real business operations, currently supporting approximately 10 daily users.",
     ],
-    github: "https://github.com/htung0403/NamPhuoc1-MERN",
-    live: "https://namphuoc1.edu.vn",
+    github: "https://github.com/htung0403/nhaxenamsu",
+    live: "https://nhaxenamsu.vercel.app",
     liveLabel: "Live Site",
   },
   {
@@ -123,31 +142,26 @@ const PROJECTS = [
   },
   {
     num: "03",
-    title: "Năm Sự Logistics & Transportation Management Platform",
+    title: "Nam Phuoc 1 Primary School Website",
     role: "Full Stack Developer",
-    desc: "A full-stack logistics and business operations platform built for a transportation company, streamlining order processing, warehouse operations, inventory management, HR, payroll, accounting, and delivery workflows.",
+    desc: "A full-stack web application for a primary school to manage blog posts and announcements, featuring a CMS for staff and teachers and running in production.",
     tech: [
       "React",
-      "TypeScript",
-      "Vite",
-      "React Router",
-      "TanStack Query",
       "Tailwind CSS",
       "Node.js",
       "Express",
-      "Supabase (PostgreSQL)",
-      "JWT",
-      "Cloudinary",
-      "Zalo API",
+      "Supabase",
+      "REST API",
+      "cPanel",
     ],
     highlights: [
-      "Built 100+ responsive pages, 50+ reusable React components, and 150+ RESTful API endpoints.",
-      "Implemented JWT authentication, role-based authorization, system configuration, and secure file uploads with Cloudinary.",
-      "Developed modules for order management, purchasing, inventory, warehouse, delivery, HR, attendance, payroll, accounting, and debt tracking.",
-      "Integrated Zalo notifications to automate operational workflows and business communications.",
+      "Deployed a production website for a real school.",
+      "Built blog and news posting features.",
+      "Developed an admin dashboard for content management.",
+      "Implemented responsive UI for mobile and desktop users.",
     ],
-    github: "https://github.com/htung0403/nhaxenamsu",
-    live: "https://nhaxenamsu.vercel.app",
+    github: "https://github.com/htung0403/NamPhuoc1-MERN",
+    live: "https://namphuoc1.edu.vn",
     liveLabel: "Live Site",
   },
 ];
@@ -184,7 +198,6 @@ function SkillBar({ name, pct, animated }) {
     <div className="skill-bar-wrap">
       <div className="skill-bar-header">
         <span className="skill-bar-name">{name}</span>
-        <span className="skill-bar-pct">{pct}%</span>
       </div>
       <div className="skill-bar-track">
         <div
@@ -418,7 +431,7 @@ export default function Portfolio() {
           <p className="hero-bio" style={heroStyle(2)}>
             Full Stack Developer
             <br />
-            1.5 Years of Freelance Experience
+            Freelance Full Stack Developer since Nov 2025
             <br />
             Building production-ready React & Node.js applications
           </p>
@@ -456,32 +469,32 @@ export default function Portfolio() {
             <div className="about-text">
               <p>
                 I'm a <strong>Full Stack Developer</strong> with{" "}
-                <strong>1.5 years of freelance experience</strong> building
+                <strong>freelance experience since Nov 2025</strong>, building
                 production-ready web applications for real clients. I specialize
-                in developing scalable business systems using{" "}
+                in{" "}
                 <strong>
-                  React, TypeScript, Node.js, Express, and PostgreSQL,
+                  React, Next.js, TypeScript, Node.js, Express, and PostgreSQL,
                 </strong>
-                with a strong focus on clean architecture, responsive user
-                interfaces, and maintainable code.
+                with a strong focus on responsive interfaces, REST APIs, clean
+                architecture, and maintainable code.
               </p>
               <p>
-                Throughout my freelance journey, I've delivered solutions for
-                logistics, education, and internal business management, including{" "}
+                I have delivered solutions for logistics, education, and internal
+                business management, including{" "}
                 <strong>
-                  order management, warehouse operations, inventory control, HR,
-                  and accounting systems.
+                  order management, warehouse operations, inventory tracking, HR,
+                  payroll, and accounting workflows.
                 </strong>
-                Working directly with clients has strengthened my ability to
-                analyze requirements, solve real business problems, and deliver
-                reliable software.
+                My work involves gathering requirements, building features,
+                fixing bugs, and maintaining systems used in real business
+                operations.
               </p>
               <p>
-                I enjoy learning new technologies, improving development
-                workflows, and building products that create real value for
-                users. My goal is to grow as a software engineer while
-                contributing to high-quality products in a collaborative team
-                environment.
+                I also use AI-assisted development tools such as{" "}
+                <strong>Codex, GitHub Copilot, and Claude</strong> to support
+                prototyping, debugging, refactoring, and technical research while
+                carefully reviewing generated code before applying it to
+                production codebases.
               </p>
             </div>
           </FadeUp>
@@ -522,24 +535,26 @@ export default function Portfolio() {
           <div className="how-card">
             <div className="how-content">
               <p className="how-quote">
-                I use <span>AI</span> as a development assistant—not a
-                replacement for engineering decisions. While AI helps streamline
-                repetitive coding and research, I remain responsible for system
-                design, implementation, debugging, testing, and delivering{" "}
+                I use tools like <span>Codex, GitHub Copilot, and Claude</span>{" "}
+                as development assistants—not replacements for engineering
+                decisions. While AI helps streamline repetitive coding,
+                debugging, refactoring, and technical research, I remain
+                responsible for understanding existing codebases, following
+                coding standards, testing changes, and delivering{" "}
                 <span>maintainable software</span>.
               </p>
               <div className="how-metrics">
                 <div className="how-metric-item">
                   <span className="how-metric-val">AI-Assisted</span>
-                  <span className="how-metric-label">Development</span>
+                  <span className="how-metric-label">Workflow</span>
                 </div>
                 <div className="how-metric-item">
-                  <span className="how-metric-val">Business</span>
-                  <span className="how-metric-label">Focused</span>
+                  <span className="how-metric-val">Existing</span>
+                  <span className="how-metric-label">Codebases</span>
                 </div>
                 <div className="how-metric-item">
-                  <span className="how-metric-val">Clean</span>
-                  <span className="how-metric-label">Architecture</span>
+                  <span className="how-metric-val">Coding</span>
+                  <span className="how-metric-label">Standards</span>
                 </div>
                 <div className="how-metric-item">
                   <span className="how-metric-val">Production</span>
